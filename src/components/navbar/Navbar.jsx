@@ -12,11 +12,12 @@ const Navbar = () => {
                 <Left>
                     <Language>
                         EN
+                    </Language>    
                         <SearchContainer>
                             <Input placeholder="Search" />
                             <FcSearch style={{ color: "grey", fontSize: "1rem" }} />
                         </SearchContainer>
-                    </Language>
+                    
                 </Left>
                 <Center>
                     <Logo>
