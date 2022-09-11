@@ -1,21 +1,24 @@
 import styled from 'styled-components';
+import { mobile } from '../../responsive';
 
 export const Container = styled.div`
     height: 3.75rem;
     width: 100%;
-    
+    ${mobile({ height: '3.0rem' })}
     // background-color: #000;
 `
 export const Wrapper = styled.div`
     padding: 0.7rem 1.4rem;
     display: flex;
     align-items: center
-    justify-content: space-between
+    justify-content: space-between;
+    ${mobile({ padding: '0.5rem 1.0rem' })}
 `
 
 export const Language = styled.span`
     font-size: 1.1rem;
     cursor: pointer;
+    ${mobile({ display: 'none' })}
 `
 
 export const Left = styled.div`
@@ -29,8 +32,9 @@ export const Center = styled.div`
     text-align: center;
 `
 export const Logo = styled.h1`
-  font-weight: bold;
-  
+  font-weight: 300;
+  font-size: 1.5rem;
+  ${mobile({ fontSize: '1.5rem' })}
 `;
 
 export const Right = styled.div`
@@ -38,11 +42,13 @@ export const Right = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    ${mobile({ flex: 2, justifyContent: 'center' })}
 `
 export const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: 25px;
+    ${mobile({ fontSize: '12px', marginLeft: '10px' })}
 
 `;
 
@@ -57,6 +63,8 @@ export const SearchContainer = styled.div`
 export const Input = styled.input`
   border: none;
   outline: none;
+  width: 15.625rem;
+  ${mobile({ width: '50px' })}
 `;
 
 /* announcements styles */
@@ -79,6 +87,7 @@ export const SliderContainer = styled.div`
     position: relative;
     overflow: hidden;
     margin-top: 2rem;
+    ${mobile({ display: 'none' })}
     // background-color: coral;
 `;
 export const Arrow = styled.div`
@@ -147,6 +156,7 @@ export const CategoryContainer = styled.div`
     display: flex;
     padding: 1.3rem;
     justify-content: space-between;
+    ${mobile({ padding: '0.5rem 1.0rem', flexDirection: 'column' })}
 `;
 
 export const CategoryInfo = styled.div`
@@ -192,4 +202,5 @@ export const CategoryImg = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    ${mobile({ height: '20vh' })}
 `

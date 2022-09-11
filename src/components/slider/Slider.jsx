@@ -17,6 +17,7 @@ import {
 } from "react-icons/bs";
 import { sliderItems } from "../data";
 
+
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
 

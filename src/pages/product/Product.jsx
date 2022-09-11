@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Announcement from "../../components/announcements/Announcement";
 import Footers from "../../components/footers/Footers";
 import Navbar from "../../components/navbar/Navbar";
 import Newsletter from "../../components/newsletter/Newsletter";
 import { Add, Remove } from "@material-ui/icons";
+import { mobile } from "../../responsive";
+import axios from "axios";
+import { publicRequest } from "../../utils";
 
 const Container = styled.div`
 
@@ -12,6 +16,7 @@ const Container = styled.div`
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
+  ${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 const ImgContainer = styled.div`
   flex: 1;
@@ -20,10 +25,12 @@ const Image = styled.img`
   width: 100%;
   height: 90vh;
   object-fit: cover;
+  ${mobile({ height: "40vh" })}
 `;
 const InfoContainer = styled.div`
   flex: 1;
   padding: 0px 50px;
+  ${mobile({ padding: "10px" })}
 `;
 const Title = styled.h1`
   font-weight: 200;
@@ -41,6 +48,7 @@ const FilterContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 30px 0px;
+    ${mobile({ width: "100%" })}
 
 `;
 const Filter = styled.div`
@@ -75,6 +83,7 @@ const AddContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${mobile({ width: "100%" })}
 `;
 
 const AmountContainer = styled.div`
@@ -106,44 +115,71 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState({});
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get(`/product/findproduct/${id}`);
+        setProduct(res.data);
+      } catch (err) {
+        console.log(err);
+      }}
+    getProduct();
+    
+  }, [id]);
+
+  const handleQuantity = (type) => {
+    if (type === "dec") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  }
+
+
   return (
     <Container>
       <Announcement />
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={product.img} />
         </ImgContainer>
         <InfoContainer>
-        <Title>Product Name</Title>
+        <Title>{product.title}</Title>
         <Desc>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius omnis
-          numquam repudiandae rerum temporibus unde.
+          {product.desc}
         </Desc>
-        <Price>$100</Price>
+        <Price>${product.price}</Price>
         <FilterContainer>
           <Filter>
             <FilterTitle>Color</FilterTitle>
-            <FilterColor color="black" />
-            <FilterColor color="darkblue" />
-            <FilterColor color="gray" />
+            {
+              product.color && product.color.map((c) => (
+                <FilterColor color={c} key={c} />
+              ))
+            }
           </Filter>
           <Filter>
             <FilterTitle>Size</FilterTitle>
             <FilterSize>
-              <FilterSizeOption>XS</FilterSizeOption>
-              <FilterSizeOption>S</FilterSizeOption>
-              <FilterSizeOption>M</FilterSizeOption>
-              <FilterSizeOption>L</FilterSizeOption>
-              <FilterSizeOption>XL</FilterSizeOption>
+              {
+                product.size && product.size.map((s) => {
+                  return <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                })
+              }
             </FilterSize>
           </Filter>
         </FilterContainer>
         <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={() => handleQuantity("dec")} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
             <Button>ADD TO CART</Button>
           </AddContainer>

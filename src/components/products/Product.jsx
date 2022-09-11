@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
@@ -46,6 +47,8 @@ const Circle = styled.div`
 const Image = styled.img`
     height: 75%;
     z-index: 2;
+    max-height: 55%;
+    border-radius: 15%
 `;
 
 const Icon = styled.div`
@@ -76,7 +79,9 @@ const Product = ({item}) => {
                 <ShoppingCartOutlinedIcon />
             </Icon>
             <Icon>
-                <SearchOutlinedIcon />
+                <Link to={`/product/${item._id}`}>
+                    <SearchOutlinedIcon />
+                </Link>
             </Icon>
             <Icon>
                 <FavoriteBorderOutlinedIcon />
