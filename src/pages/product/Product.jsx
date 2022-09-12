@@ -9,6 +9,8 @@ import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../../responsive";
 import axios from "axios";
 import { publicRequest } from "../../utils";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/cartRedux";
 
 const Container = styled.div`
 
@@ -119,6 +121,10 @@ const Product = () => {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const getProduct = async () => {
@@ -140,6 +146,16 @@ const Product = () => {
     }
   }
 
+  const handleClick = async () => {
+    dispatch(
+      addProduct(
+        {
+          ...product, quantity, color, size
+        }
+      )
+    )
+  };
+
 
   return (
     <Container>
@@ -160,13 +176,13 @@ const Product = () => {
             <FilterTitle>Color</FilterTitle>
             {
               product.color && product.color.map((c) => (
-                <FilterColor color={c} key={c} />
+                <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))
             }
           </Filter>
           <Filter>
             <FilterTitle>Size</FilterTitle>
-            <FilterSize>
+            <FilterSize onChange={(e) => setSize(e.target.value)}>
               {
                 product.size && product.size.map((s) => {
                   return <FilterSizeOption key={s}>{s}</FilterSizeOption>
@@ -181,7 +197,7 @@ const Product = () => {
               <Amount>{quantity}</Amount>
               <Add onClick={() => handleQuantity("inc")} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
+            <Button onClick={handleClick} >ADD TO CART</Button>
           </AddContainer>
       </InfoContainer>
       </Wrapper>
