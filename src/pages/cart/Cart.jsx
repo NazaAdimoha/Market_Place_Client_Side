@@ -115,8 +115,8 @@ const ProductPrice = styled.div`
 
 const Hr = styled.hr`
   background-color: #eee;
-  border: none;
-  height: 1px;
+  border: 3px solid #eee;
+  height: 3px;
 `;
 
 const Summary = styled.div`
@@ -173,6 +173,7 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((product) => (
+              <>
               <Product>
                 <ProductDetail>
                   <Image src={product.img} />
@@ -192,20 +193,22 @@ const Cart = () => {
                 <PriceDetail>
                   <ProductAmountContainer>
                     <Add />
-                    <ProductAmount>2</ProductAmount>
+                    <ProductAmount>{product.quantity}</ProductAmount>
                     <Remove />
                   </ProductAmountContainer>
-                  <ProductPrice>$ 30</ProductPrice>
+                  <ProductPrice>${product.price * product.quantity}</ProductPrice>
                 </PriceDetail>
               </Product>
+              <Hr />
+              </>
             ))}
-            <Hr />
+            
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -217,7 +220,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
             <Button>CHECKOUT NOW</Button>
           </Summary>
