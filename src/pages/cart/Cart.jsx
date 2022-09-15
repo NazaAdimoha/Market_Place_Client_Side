@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../../components/announcements/Announcement";
@@ -5,6 +6,7 @@ import Footers from "../../components/footers/Footers";
 import Navbar from "../../components/navbar/Navbar";
 import { mobile } from "../../responsive";
 import { useSelector } from "react-redux";
+import { PaystackButton } from "react-paystack";
 
 const Container = styled.div``;
 
@@ -156,6 +158,34 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+
+  {/* PayStack Integration */}
+  const publicKey = "pk_test_b6b76066aafed05d8897ba6d57cfb24a9deb274e";
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [checkedout, setCheckedout] = useState(false);
+
+
+  const config ={
+    reference: (new Date()).getTime(),
+    email: "moses@gmail.com",
+    amount: +cart.total * 100,
+    publicKey: publicKey,
+    metadata: {
+      name,
+      phone: "08012345678",
+    },
+  }
+
+  const componentProps = {
+    ...config,
+    text: "CHECKOUT NOW",
+    onSuccess: (reference) => alert("Thanks for shopping with BuyConnect...! Come back soon!"),
+    onClose: () => alert("Wait! Don't leave :("),
+
+  }
+
   return (
     <Container>
       <Announcement />
@@ -222,7 +252,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <PaystackButton {...componentProps} />
           </Summary>
         </Bottom>
       </Wrapper>
