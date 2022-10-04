@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Announcement from "../../components/announcements/Announcement";
@@ -145,26 +145,12 @@ const SummaryItemText = styled.span``;
 
 const SummaryItemPrice = styled.span``;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: black;
-  color: white;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-`;
+
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
 
-  {/* PayStack Integration */}
   const publicKey = "pk_test_b6b76066aafed05d8897ba6d57cfb24a9deb274e";
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [checkedout, setCheckedout] = useState(false);
 
 
   const config ={
@@ -173,7 +159,7 @@ const Cart = () => {
     amount: +cart.total * 100,
     publicKey: publicKey,
     metadata: {
-      name,
+      
       phone: "08012345678",
     },
   }

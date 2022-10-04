@@ -7,7 +7,6 @@ import Navbar from "../../components/navbar/Navbar";
 import Newsletter from "../../components/newsletter/Newsletter";
 import { Add, Remove } from "@material-ui/icons";
 import { mobile } from "../../responsive";
-import axios from "axios";
 import { publicRequest } from "../../utils";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/cartRedux";

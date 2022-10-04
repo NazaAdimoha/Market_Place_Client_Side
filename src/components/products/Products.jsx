@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { popularProducts } from "../data";
 import Product from "./Product";
 import axios from "axios";
 
@@ -15,9 +14,7 @@ const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  {
-    /* Fetching data from the backend */
-  }
+ 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -39,7 +36,7 @@ const Products = ({ cat, filters, sort }) => {
       products.filter((product) => Object.entries(filters).every(([key, value]) => product[key].includes(value)))
     )
 
-  }, [filters, sort, products]);
+  }, [filters, sort, products, cat]);
 
   useEffect(() => {
     if (sort === "newest") {
